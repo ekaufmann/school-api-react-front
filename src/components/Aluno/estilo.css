@@ -1,0 +1,10 @@
+.cria-aluno {
+  max-width: 40%;
+}
+
+.aluno-item {
+  height: 140;
+  min-width: 160px;
+  padding: 10px;
+  max-width: 500px;
+}

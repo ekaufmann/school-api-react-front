@@ -1,24 +1,26 @@
-import logo from './logo.svg';
+import { Route, Switch } from 'react-router-dom/cjs/react-router-dom.min';
+import { Container } from '@material-ui/core';
+
 import './App.css';
+import { ROUTES, ROUTES_ADM } from './config/Routes/Routes';
 
 function App() {
+
+  const routes = [...ROUTES, ...ROUTES_ADM];
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+    <Container align="center">
+      <Switch>
+        {
+          routes.map((route, index) => {
+            return (
+              <Route exact path={route.path} component={route.component} key={index} />
+            );
+          })
+        }
+      </Switch>
+    </Container>
   );
 }
 

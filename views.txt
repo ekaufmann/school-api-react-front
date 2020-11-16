@@ -1,0 +1,16 @@
+3 tipos de acesso:
+  Aluno
+  Mentor
+  Sistema
+
+Aluno:
+  - Ver dados gerais -> Mentoria, Mentores, Programa, Disciplinas, Avaliações;
+  - Fazer avaliação disponível;
+
+Mentor:
+  - Ver dados gerais -> Mentorias, Alunos mentorados, Avaliações;
+  - Corrigir avaliações disponíveis;
+
+Administradores do sistema:
+  - Ver todos os dados possíveis;
+  - CRUD completo;
