@@ -1,66 +1,73 @@
-import { Box, Button, FormControl, InputLabel, makeStyles, MenuItem, Select, TextField } from '@material-ui/core';
+import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 import React, { Fragment, useState } from 'react';
 import AdmHeader from '../AdmHeader';
+import ConsultarAlunos from './ConsultarAlunos';
+import { estilo } from './estilo';
+import api from '../../../config/api';
 
-const estilo = makeStyles((tema) => ({
-  formControl: {
-    margin: tema.spacing(1),
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: tema.spacing(1),
-    minWidth: 100,
-  },
-  inputLabel: {
-    margin: tema.spacing(1, 0),
-  },
-  addButton: {
-    margin: tema.spacing(3, 1),
-    minWidth: 100,
-  },
-  searchButton: {
-    margin: tema.spacing(3, 1),
-    minWidth: 100,
-    color: '#fff',
-    backgroundColor: '#4caf50',
-    borderColor: '#4caf60',
-    boxShadow: '0px 1px 1px 1px rgba(0,0,0,0.2)',
-    '&:hover': {
-      backgroundColor: '#4caf50',
-      borderColor: '#4caf60',
-      boxShadow: '0px 2px 4px 1px rgba(0,0,0,0.2)',
-    },
-    '&:active': {
-      boxShadow: '0 0 0 0.2rem rgba(0,255,125,.5)',
-      backgroundColor: '#367d39',
-      borderColor: '#4caf60',
-    },
-  }
-}));
 
 const AdmAlunoView = () => {
 
   const classes = estilo();
   const allAlunos = 2;
 
-  const [aluno, setAluno] = useState({ id: 0, active: '' });
+  const [aluno, setAluno] = useState({ id: 0, active: 2 });
+  const [alunosConsultados, setAlunosConsultados] = useState([]);
   const [disableSearch, setDisableSearch] = useState(false);
 
+  const _handleGetRequest = (url, func) => {
+    api.get(url)
+      .then((response) => {
+        const dados = response.data;
+
+        if(!Array.isArray(dados)) {
+          func([dados]);
+        } else {
+          func(dados);
+        }
+      }).catch((erro) => {
+        if(erro.response.status) {
+          alert("Aluno não encontrado!")
+        }
+        console.error(erro.response);
+      })
+  }
+
+  const _handleAlunosConsulta = (event) => {
+    let url = '/aluno?active=';
+    if (aluno.id === 0 && (aluno.active === 0 || aluno.active === 1)) {
+      url = `/aluno?active=${aluno.active}`;
+    }
+    if (aluno.id > 0) {
+      url = `/aluno/${aluno.id}`;
+    }
+    _handleGetRequest(url, setAlunosConsultados);
+  };
+
   const _handleUnitSearch = (event) => {
-    const alvo = document.querySelector('#alunoId').value;
-    if(alvo.trim() === "") {
+    const alvo = document.querySelector('#alunoId').value.trim();
+    const regex = /^[0-9]/;
+
+    if (!(regex.test(alvo)) && alvo !== "") {
+      alert("Somente números são permitidos!")
+      event.target.value = "";
+    }
+
+    if (alvo === "") {
       setDisableSearch(false);
+      setAluno({ id: 0, active: 2 });
     } else {
       setDisableSearch(true);
+      setAluno({ id: alvo, active: 2 });
     }
-  }
+  };
 
   const _handleActiveSelection = (event) => {
     const value = event.target.value;
-    if(value !== '') {
-      setAluno({ ...aluno, active: value});
+    if (value !== 2) {
+      setAluno({ id: 0, active: value });
     }
-  }
+  };
 
   return (
     <Fragment>
@@ -80,8 +87,9 @@ const AdmAlunoView = () => {
                 margin="normal"
                 title="Se nenhuma id for informada, a pesquisa retornará todos os alunos"
                 onChange={_handleUnitSearch}
+
               />
-              <FormControl disabled={disableSearch} variant="outlined" className={classes.formControl}>
+              <FormControl id="form-select" disabled={disableSearch} variant="outlined" className={classes.formControl}>
                 <InputLabel id="select-alunos" className={classes.inputLabel}>Alunos</InputLabel>
                 <Select
                   title="Se nehuma opção for escolhida, a pesquisa retornará ativos e inativos"
@@ -102,7 +110,7 @@ const AdmAlunoView = () => {
               <Button
                 variant="outlined"
                 color="primary"
-                onClick={() => console.log(aluno)}
+                onClick={_handleAlunosConsulta}
                 className={classes.searchButton}
               >
                 Consultar
@@ -123,6 +131,7 @@ const AdmAlunoView = () => {
           </Box>
         </fieldset>
         <br />
+        <ConsultarAlunos alunos={alunosConsultados} />
       </form>
     </Fragment>
   );
