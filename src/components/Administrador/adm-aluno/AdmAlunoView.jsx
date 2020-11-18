@@ -1,9 +1,9 @@
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 import React, { Fragment, useState } from 'react';
 import AdmHeader from '../AdmHeader';
-import ConsultarAlunos from './ConsultarAlunos';
 import { estilo } from './estilo';
 import api from '../../../config/api';
+import TableSearch from './TableSearch';
 
 
 const AdmAlunoView = () => {
@@ -26,10 +26,9 @@ const AdmAlunoView = () => {
           func(dados);
         }
       }).catch((erro) => {
-        if(erro.response.status) {
-          alert("Aluno não encontrado!")
+        if(erro.response.status === 404) {
+          alert("Aluno não encontrado!");
         }
-        console.error(erro.response);
       })
   }
 
@@ -131,7 +130,7 @@ const AdmAlunoView = () => {
           </Box>
         </fieldset>
         <br />
-        <ConsultarAlunos alunos={alunosConsultados} />
+        <TableSearch hidden alunos={alunosConsultados} />
       </form>
     </Fragment>
   );
