@@ -4,11 +4,12 @@ import PageHeader from '../../../components/PageHeader';
 import estilo from './estilo';
 import { handleGetRequest } from '../../../services/httpService/httpService';
 import TableSearch from './TableSearch';
+import CreateData from './CreateData';
 
 
 const AdmAlunoView = () => {
 
-  const [classes, setEstilo] = useState(estilo());
+  const [classes] = useState(estilo());
   const allAlunos = 2;
 
   const [idPesquisada, setIdPesquisada] = useState(0);
@@ -115,15 +116,8 @@ const AdmAlunoView = () => {
 
             <Box flexGrow={1}></Box>
 
-            <Box justifyContent="flex-end">
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.addButton}
-                onClick={<CriarAluno alunos={alunosRecebidos} />}
-              >
-                Novo Aluno
-              </Button>
+            <Box justifyContent="flex-end" >
+              <CreateData dados={dadosRecebidos} entidade={"aluno"} classes={classes} />
             </Box>
           </Box>
         </fieldset>
