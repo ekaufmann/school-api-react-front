@@ -1,7 +1,7 @@
 const { makeStyles } = require("@material-ui/core");
 
 
-export const estilo = makeStyles((tema) => ({
+const estilo = makeStyles((tema) => ({
   formControl: {
     margin: tema.spacing(1),
     minWidth: 120,
@@ -34,5 +34,16 @@ export const estilo = makeStyles((tema) => ({
       backgroundColor: '#367d39',
       borderColor: '#4caf60',
     },
+  },
+  tabela: {
+    width: '100%',
+    borderCollapse: 'collapse',
+    border: '1px solid black',
+  },
+  tabelaElemento: {
+    border: '1px solid black',
+    padding: '10px',
   }
 }));
+
+export default estilo;

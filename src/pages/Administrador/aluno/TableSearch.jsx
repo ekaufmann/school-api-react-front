@@ -1,11 +1,11 @@
 // import { TableBody } from '@material-ui/core';
 import React from 'react';
-import './estilo.css';
+import './estilo.js';
 import TableHeader from './TableHeader';
 
-const TableSearch = ({ alunos }) => {
+const TableSearch = ({ dados, classes }) => {
 
-  if (alunos.length === 0) {
+  if (dados.length === 0) {
     return (null);
   }
 
@@ -33,17 +33,17 @@ const TableSearch = ({ alunos }) => {
   return (
     <fieldset>
       <legend>Resultado da consulta</legend>
-      <table className="tabela">
+      <table className={classes.tabela}>
         <tbody>
-          <TableHeader headers={alunos[0]} />
-          {/* <TableBody dados={alunos} /> */}
+          <TableHeader headers={dados[0]} classes={classes} />
+          {/* <TableBody dados={dados} /> */}
 
-          {_fillData(alunos).map((alunosLinha, index) => {
+          {_fillData(dados).map((alunosLinha, index) => {
             return (
               <tr key={index}>
                 {alunosLinha.map((dado, index) => {
                   return (
-                    <td className="tabela-elemento" key={index}>{dado}</td>
+                    <td className={classes.tabelaElemento} key={index}>{dado}</td>
                   );
                 })}
               </tr>

@@ -11,6 +11,7 @@ function Aluno() {
     <Fragment>
       <MenuAluno setAlunos={setAlunos} />
       <h1>Aluno</h1>
+      <h2>Em construção!!!</h2>
     </Fragment>
   );
 }

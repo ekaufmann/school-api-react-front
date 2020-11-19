@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TableHeader = ({ headers }) => {
+const TableHeader = ({ headers, classes }) => {
 
   const _fillHeaders = (headers) => {
     let arr = [];
@@ -20,7 +20,7 @@ const TableHeader = ({ headers }) => {
     <tr>
       {_fillHeaders(headers).map((header, index) => {
         return (
-          <th className="tabela-elemento" key={index}>{header}</th>
+          <th className={classes.tabelaElemento} key={index}>{header}</th>
         );
       })}
     </tr>

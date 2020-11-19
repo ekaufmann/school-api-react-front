@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
-import AdmHeader from './AdmHeader';
+import PageHeader from '../../components/PageHeader';
 
 const Administrador = () => {
   return (
     <Fragment>
 
-      <AdmHeader saudacao="Bem-vindo administrador!" />
+      <PageHeader saudacao="Bem-vindo administrador!" />
 
     </Fragment>
   );

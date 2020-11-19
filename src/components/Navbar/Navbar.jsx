@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { Button } from '@material-ui/core';
+import HomeButton from '../buttons/HomeButton';
 
 const Navbar = ({ routes }) => {
   return (
     <nav>
+      <HomeButton />
       {routes.map((route, index) => {
         return (
           <Button

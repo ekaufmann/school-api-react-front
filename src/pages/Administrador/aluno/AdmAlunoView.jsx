@@ -1,47 +1,63 @@
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
-import React, { Fragment, useState } from 'react';
-import AdmHeader from '../AdmHeader';
-import { estilo } from './estilo';
-import api from '../../../config/api';
+import React, { Fragment, useEffect, useState } from 'react';
+import PageHeader from '../../../components/PageHeader';
+import estilo from './estilo';
+import { handleGetRequest } from '../../../services/httpService/httpService';
 import TableSearch from './TableSearch';
 
 
 const AdmAlunoView = () => {
 
-  const classes = estilo();
+  const [classes, setEstilo] = useState(estilo());
   const allAlunos = 2;
 
-  const [aluno, setAluno] = useState({ id: 0, active: 2 });
-  const [alunosConsultados, setAlunosConsultados] = useState([]);
-  const [disableSearch, setDisableSearch] = useState(false);
+  const [idPesquisada, setIdPesquisada] = useState(0);
+  const [activeSelecionado, setActiveSelecionado] = useState(2);
+  const [disableSelect, setDisableSelect] = useState(false);
 
-  const _handleGetRequest = (url, func) => {
-    api.get(url)
-      .then((response) => {
-        const dados = response.data;
+  const [dadosRecebidos, setDadosRecebidos] = useState([]);
+  const [dadosConsultados, setDadosConsultados] = useState([]);
 
-        if(!Array.isArray(dados)) {
-          func([dados]);
-        } else {
-          func(dados);
-        }
-      }).catch((erro) => {
-        if(erro.response.status === 404) {
-          alert("Aluno não encontrado!");
-        }
-      })
+  // componentDidMount - GET
+  useEffect(() => {
+    handleGetRequest('./aluno?active=', setDadosRecebidos);
+  }, []);
+
+  // componentDidUpdate - Search by Id
+  useEffect(() => {
+    const pesquisado = dadosRecebidos.filter(obj => obj.id === idPesquisada);
+    if (idPesquisada === 0) {
+      setDadosConsultados(dadosRecebidos);
+    } else if (pesquisado.length === 1) {
+      setDadosConsultados(pesquisado);
+    } else if (pesquisado.id !== idPesquisada) {
+      setDadosConsultados([]);
+    }
+  }, [idPesquisada, dadosRecebidos])
+
+  // componentDidUpdate - Search by Active
+  useEffect(() => {
+    const pesquisado = dadosRecebidos.filter(obj => obj.active === !!activeSelecionado);
+    if (activeSelecionado === 2) {
+      setDadosConsultados(dadosRecebidos);
+    } else if (pesquisado.length >= 1) {
+      setDadosConsultados(pesquisado);
+    } else if (pesquisado.active !== !!activeSelecionado) {
+      setDadosConsultados([]);
+    }
+  }, [activeSelecionado, dadosRecebidos])
+
+  const _handleDisabledSelect = (alvo) => {
+    let selection = true;
+    if (alvo === "") {
+      selection = false;
+      setActiveSelecionado(2);
+      setIdPesquisada(0);
+    } else {
+      setIdPesquisada(parseInt(alvo));
+    }
+    setDisableSelect(selection);
   }
-
-  const _handleAlunosConsulta = (event) => {
-    let url = '/aluno?active=';
-    if (aluno.id === 0 && (aluno.active === 0 || aluno.active === 1)) {
-      url = `/aluno?active=${aluno.active}`;
-    }
-    if (aluno.id > 0) {
-      url = `/aluno/${aluno.id}`;
-    }
-    _handleGetRequest(url, setAlunosConsultados);
-  };
 
   const _handleUnitSearch = (event) => {
     const alvo = document.querySelector('#alunoId').value.trim();
@@ -51,26 +67,17 @@ const AdmAlunoView = () => {
       alert("Somente números são permitidos!")
       event.target.value = "";
     }
-
-    if (alvo === "") {
-      setDisableSearch(false);
-      setAluno({ id: 0, active: 2 });
-    } else {
-      setDisableSearch(true);
-      setAluno({ id: alvo, active: 2 });
-    }
+    _handleDisabledSelect(alvo);
   };
 
   const _handleActiveSelection = (event) => {
     const value = event.target.value;
-    if (value !== 2) {
-      setAluno({ id: 0, active: value });
-    }
+    setActiveSelecionado(value);
   };
 
   return (
     <Fragment>
-      <AdmHeader saudacao="Gerenciamento de Alunos" />
+      <PageHeader saudacao="Gerenciamento de Alunos" />
 
       <form name="gerencia-alunos">
         <fieldset>
@@ -88,15 +95,15 @@ const AdmAlunoView = () => {
                 onChange={_handleUnitSearch}
 
               />
-              <FormControl id="form-select" disabled={disableSearch} variant="outlined" className={classes.formControl}>
+              <FormControl id="form-select" disabled={disableSelect} variant="outlined" className={classes.formControl}>
                 <InputLabel id="select-alunos" className={classes.inputLabel}>Alunos</InputLabel>
                 <Select
                   title="Se nehuma opção for escolhida, a pesquisa retornará ativos e inativos"
                   labelId="select-alunos"
                   id="select-alunos"
                   label="Alunos"
-                  className={classes.selectEmpty}
                   defaultValue={allAlunos}
+                  className={classes.selectEmpty}
                   onChange={_handleActiveSelection}
                 >
                   <MenuItem value={allAlunos}>Todos</MenuItem>
@@ -104,16 +111,6 @@ const AdmAlunoView = () => {
                   <MenuItem value={1}>Ativos</MenuItem>
                 </Select>
               </FormControl>
-            </Box>
-            <Box justifyContent="flex-end">
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={_handleAlunosConsulta}
-                className={classes.searchButton}
-              >
-                Consultar
-              </Button>
             </Box>
 
             <Box flexGrow={1}></Box>
@@ -123,6 +120,7 @@ const AdmAlunoView = () => {
                 variant="contained"
                 color="primary"
                 className={classes.addButton}
+                onClick={<CriarAluno alunos={alunosRecebidos} />}
               >
                 Novo Aluno
               </Button>
@@ -130,7 +128,7 @@ const AdmAlunoView = () => {
           </Box>
         </fieldset>
         <br />
-        <TableSearch hidden alunos={alunosConsultados} />
+        <TableSearch hidden dados={dadosConsultados} classes={classes} />
       </form>
     </Fragment>
   );
