@@ -1,15 +1,11 @@
-import { Button, Dialog, DialogContent, DialogContentText, DialogTitle, FormControl, Slide, TextField } from '@material-ui/core';
-import React, { forwardRef, useState } from 'react';
+import React, { useState } from 'react';
+import PopUp from '../../../components/PopUp/PopUp';
 import { handlePostRequest } from '../../../services/httpService/httpService';
 
-const Transition = forwardRef(
-  function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-  });
 
 const CreateData = (props) => {
 
-  const { dados, entidade, entidadeNome, classes, validator, postUrl } = props;
+  const { dados, setDados, entidade, entidadeNome, classes, validator, postUrl } = props;
   const [labels, setLabels] = useState([]);
   const [open, setOpen] = useState(false);
   const [validInput, setValidInput] = useState({ valid: false, color: "secondary" });
@@ -61,7 +57,8 @@ const CreateData = (props) => {
     }
     if (entidadeAux.nome && entidadeAux.classe) {
       entidadeAux.id = dados[dados.length - 1].id + 1;
-      dados.push(entidadeAux);
+      setDados([...dados, entidadeAux]);
+      
       const obj = { nome: entidadeAux.nome, classe: entidadeAux.classe };
       handlePostRequest(postUrl, obj);
     }
@@ -69,54 +66,18 @@ const CreateData = (props) => {
   }
 
   return (
-    <>
-      <Button
-        variant="contained"
-        color="primary"
-        className={classes.addButton}
-        onClick={_handleClickOpen}
-      >
-        Criar {entidadeNome}
-      </Button>
-      <Dialog
-        open={open}
-        onClose={_handleClickClose}
-        TransitionComponent={Transition}
-        aria-labelledby="form-creation-dialog-slide-title"
-        aria-describedby="form-creation-dialog-slide-description"
-      >
-        <DialogTitle>Criar {entidadeNome}</DialogTitle>
-        <DialogContent>
-          <DialogContentText>Para criar um(a) novo(a) {entidadeNome} preencha os campos abaixo e clique em Enviar</DialogContentText>
-
-          <FormControl className={classes.FormControl}>
-            {labels.map((label, index) => {
-              return (
-                <TextField
-                  id={entidadeNome + label}
-                  label={label}
-                  key={index}
-                  color={validInput.color}
-                  helperText={validator[label].helperText}
-                  variant="outlined"
-                  margin="normal"
-                  onChange={_handleInputValidation}
-                />
-              );
-            })}
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              className={classes.addButton}
-              onClick={_handleSubmit}
-            >
-              Criar
-            </Button>
-          </FormControl>
-        </DialogContent>
-      </Dialog>
-    </>
+    <PopUp
+      open={open}
+      classes={classes}
+      handleOpen={_handleClickOpen}
+      handleClose={_handleClickClose}
+      handleInputValidation={_handleInputValidation}
+      handleSubmit={_handleSubmit}
+      entidadeNome={entidadeNome}
+      labels={labels}
+      validInput={validInput}
+      validator={validator}
+    />
   );
 };
 

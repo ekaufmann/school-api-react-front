@@ -121,6 +121,7 @@ const AdmAlunoView = () => {
             <Box justifyContent="flex-end" >
               <CreateData
                 dados={dadosRecebidos}
+                setDados={setDadosRecebidos}
                 entidade={entidade}
                 entidadeNome={"aluno"}
                 classes={classes}
