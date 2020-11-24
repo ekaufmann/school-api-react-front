@@ -1,10 +1,11 @@
-import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
+import { Box, FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 import React, { Fragment, useEffect, useState } from 'react';
 import PageHeader from '../../../components/PageHeader';
 import estilo from './estilo';
 import { handleGetRequest } from '../../../services/httpService/httpService';
 import TableSearch from './TableSearch';
 import CreateData from './CreateData';
+import alunoValidators from './alunoObjs';
 
 
 const AdmAlunoView = () => {
@@ -18,6 +19,7 @@ const AdmAlunoView = () => {
 
   const [dadosRecebidos, setDadosRecebidos] = useState([]);
   const [dadosConsultados, setDadosConsultados] = useState([]);
+  const [entidade, setEntidade] = useState({ id:0, nome: "", classe: "", active: true, programa: null });
 
   // componentDidMount - GET
   useEffect(() => {
@@ -61,7 +63,7 @@ const AdmAlunoView = () => {
   }
 
   const _handleUnitSearch = (event) => {
-    const alvo = document.querySelector('#alunoId').value.trim();
+    const alvo = document.querySelector('#alunoid').value.trim();
     const regex = /^[0-9]/;
 
     if (!(regex.test(alvo)) && alvo !== "") {
@@ -87,7 +89,7 @@ const AdmAlunoView = () => {
           <Box display="flex">
             <Box justifyContent="flex-start" alignItems="flex-start" >
               <TextField
-                id="alunoId"
+                id="alunoid"
                 name="id"
                 label="ID Aluno"
                 variant="outlined"
@@ -117,7 +119,14 @@ const AdmAlunoView = () => {
             <Box flexGrow={1}></Box>
 
             <Box justifyContent="flex-end" >
-              <CreateData dados={dadosRecebidos} entidade={"aluno"} classes={classes} />
+              <CreateData
+                dados={dadosRecebidos}
+                entidade={entidade}
+                entidadeNome={"aluno"}
+                classes={classes}
+                validator={alunoValidators}
+                postUrl={'./aluno'}
+              />
             </Box>
           </Box>
         </fieldset>

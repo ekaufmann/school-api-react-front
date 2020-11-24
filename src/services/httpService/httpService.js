@@ -12,8 +12,18 @@ export const handleGetRequest = (url, func) => {
         dados = [dados];
       }
       func(dados);
-    }).catch((erro) => {
-      console.error(erro);
+    }).catch((error) => {
+      console.error(error);
+    })
+};
+
+export const handlePostRequest = (url, obj) => {
+  httpService.post(url, obj)
+    .then(({ data }) => {
+      console.log(data);
+    })
+    .catch(({error}) => {
+      console.error(error);
     })
 };
 

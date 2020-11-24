@@ -5,10 +5,12 @@ import Mentor from "../../pages/Mentor";
 
 import AdmAlunoView from "../../pages/Administrador/aluno/AdmAlunoView";
 
+/*{ title: 'Aluno', path: '/aluno', component: Aluno },
+  { title: 'Mentor', path: '/mentor', component: Mentor },
+  */
+
 export const ROUTES = [
   { title: 'Home', path: '/', component: Home },
-  { title: 'Aluno', path: '/aluno', component: Aluno },
-  { title: 'Mentor', path: '/mentor', component: Mentor },
   { title: 'Administrador', path: '/adm', component: Administrador },
 ];
 
