@@ -5,7 +5,7 @@ import { handlePostRequest } from '../../../services/httpService/httpService';
 
 const CreateData = (props) => {
 
-  const { dados, setDados, entidade, entidadeNome, classes, validator, postUrl } = props;
+  const { dados, setDados, entidadeNome, classes, validator, postUrl } = props;
   const [labels, setLabels] = useState([]);
   const [open, setOpen] = useState(false);
   const [validInput, setValidInput] = useState({ valid: false, color: "secondary" });
@@ -46,7 +46,7 @@ const CreateData = (props) => {
   }
 
   const _handleSubmit = () => {
-    const entidadeAux = entidade;
+    const entidadeAux = validator.aluno;
     for (let prop in entidadeAux) {
       const input = document.querySelector(`#${entidadeNome + prop}`);
       if (input && validInput.valid) {
@@ -58,7 +58,7 @@ const CreateData = (props) => {
     if (entidadeAux.nome && entidadeAux.classe) {
       entidadeAux.id = dados[dados.length - 1].id + 1;
       setDados([...dados, entidadeAux]);
-      
+
       const obj = { nome: entidadeAux.nome, classe: entidadeAux.classe };
       handlePostRequest(postUrl, obj);
     }

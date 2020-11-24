@@ -4,6 +4,7 @@ import Home from "../../pages/Home";
 import Mentor from "../../pages/Mentor";
 
 import AdmAlunoView from "../../pages/Administrador/aluno/AdmAlunoView";
+import AdmMentorView from "../../pages/Administrador/mentor/AdmMentorView";
 
 /*{ title: 'Aluno', path: '/aluno', component: Aluno },
   { title: 'Mentor', path: '/mentor', component: Mentor },
@@ -16,7 +17,7 @@ export const ROUTES = [
 
 export const ROUTES_ADM = [
   { title: 'Alunos', path: '/adm/aluno', component: AdmAlunoView},
-  { title: 'Mentores', path: '/adm/mentore', component: 'c'},
+  { title: 'Mentores', path: '/adm/mentor', component: AdmMentorView},
   { title: 'Mentorias', path: '/adm/mentoria', component: 'c'},
   { title: 'Programas', path: '/adm/programa', component: 'c'},
   { title: 'Disciplinas', path: '/adm/disciplina', component: 'c'},

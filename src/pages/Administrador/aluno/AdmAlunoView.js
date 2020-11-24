@@ -5,7 +5,7 @@ import estilo from './estilo';
 import { handleGetRequest } from '../../../services/httpService/httpService';
 import TableSearch from './TableSearch';
 import CreateData from './CreateData';
-import alunoValidators from './alunoObjs';
+import { alunoValidators } from '../validatorObjs';
 
 
 const AdmAlunoView = () => {
@@ -19,7 +19,6 @@ const AdmAlunoView = () => {
 
   const [dadosRecebidos, setDadosRecebidos] = useState([]);
   const [dadosConsultados, setDadosConsultados] = useState([]);
-  const [entidade, setEntidade] = useState({ id:0, nome: "", classe: "", active: true, programa: null });
 
   // componentDidMount - GET
   useEffect(() => {
@@ -122,7 +121,6 @@ const AdmAlunoView = () => {
               <CreateData
                 dados={dadosRecebidos}
                 setDados={setDadosRecebidos}
-                entidade={entidade}
                 entidadeNome={"aluno"}
                 classes={classes}
                 validator={alunoValidators}
