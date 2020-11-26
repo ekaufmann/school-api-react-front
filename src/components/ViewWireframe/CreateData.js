@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import PopUp from '../../../components/PopUp/PopUp';
-import { handlePostRequest } from '../../../services/httpService/httpService';
+import PopUp from '../PopUp/PopUp';
+import { handlePostRequest } from '../../services/httpService/httpService';
 
 
 const CreateData = (props) => {
@@ -46,7 +46,7 @@ const CreateData = (props) => {
   }
 
   const _handleSubmit = () => {
-    const entidadeAux = validator.aluno;
+    const entidadeAux = validator[entidadeNome];
     for (let prop in entidadeAux) {
       const input = document.querySelector(`#${entidadeNome + prop}`);
       if (input && validInput.valid) {
@@ -55,12 +55,13 @@ const CreateData = (props) => {
         entidadeAux[prop] = "";
       }
     }
-    if (entidadeAux.nome && entidadeAux.classe) {
+
+    if (validInput.valid) {
       entidadeAux.id = dados[dados.length - 1].id + 1;
       setDados([...dados, entidadeAux]);
 
-      const obj = { nome: entidadeAux.nome, classe: entidadeAux.classe };
-      handlePostRequest(postUrl, obj);
+      //handlePostRequest(postUrl, obj);
+      _handleClickClose();
     }
 
   }

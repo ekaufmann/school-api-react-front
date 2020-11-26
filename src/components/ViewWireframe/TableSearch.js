@@ -1,6 +1,6 @@
 // import { TableBody } from '@material-ui/core';
 import React from 'react';
-import './estilo.js';
+import '../../estilo.js';
 import TableHeader from './TableHeader';
 
 const TableSearch = ({ dados, classes }) => {
