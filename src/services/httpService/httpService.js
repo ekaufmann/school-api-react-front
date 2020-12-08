@@ -5,13 +5,10 @@ const httpService = axios.create({
 });
 
 export const handleGetRequest = (url, func) => {
-  httpService.get(url)
+  httpService.get((url))
     .then((response) => {
-      let dados = response.data;
-      if (!Array.isArray(dados)) {
-        dados = [dados];
-      }
-      func(dados);
+      const data = response.data;
+      func(data);
     }).catch((error) => {
       console.error(error);
     })
@@ -22,7 +19,7 @@ export const handlePostRequest = (url, obj) => {
     .then(({ data }) => {
       console.log(data);
     })
-    .catch(({error}) => {
+    .catch(({ error }) => {
       console.error(error);
     })
 };

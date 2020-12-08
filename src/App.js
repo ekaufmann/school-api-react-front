@@ -1,5 +1,5 @@
 import { Route, Switch } from 'react-router-dom/cjs/react-router-dom.min';
-import { Container } from '@material-ui/core';
+import { Container, useTheme } from '@material-ui/core';
 
 import './App.css';
 import { ROUTES, ROUTES_ADM } from './config/Routes/Routes';

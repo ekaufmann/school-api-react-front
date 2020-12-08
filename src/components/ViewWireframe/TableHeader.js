@@ -1,6 +1,7 @@
+import { TableCell, TableHead, TableRow } from '@material-ui/core';
 import React from 'react';
 
-const TableHeader = ({ headers, classes }) => {
+const TableHeader = ({ headers }) => {
 
   const _fillHeaders = (headers) => {
     let arr = [];
@@ -17,13 +18,15 @@ const TableHeader = ({ headers, classes }) => {
   }
 
   return (
-    <tr>
-      {_fillHeaders(headers).map((header, index) => {
-        return (
-          <th className={classes.tabelaElemento} key={index}>{header}</th>
-        );
-      })}
-    </tr>
+    <TableHead>
+      <TableRow>
+        {_fillHeaders(headers).map((header, index) => {
+          return (
+            <TableCell key={index}>{header}</TableCell>
+          );
+        })}
+      </TableRow>
+    </TableHead>
   );
 
 };

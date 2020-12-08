@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { Button, Dialog, DialogContent, DialogContentText, DialogTitle, FormControl, Slide, TextField } from '@material-ui/core';
+import { Button, Dialog, DialogContent, DialogContentText, DialogTitle, FormControl, Slide, TextField, useTheme } from '@material-ui/core';
 
 const Transition = forwardRef(
   function Transition(props, ref) {
@@ -8,7 +8,6 @@ const Transition = forwardRef(
 
 const PopUp = ({
   open,
-  classes,
   handleOpen,
   handleClose,
   handleInputValidation,
@@ -19,13 +18,15 @@ const PopUp = ({
   validator
 }) => {
 
+  const theme = useTheme();
+
   return (
     <>
       <Button
         variant="contained"
         color="primary"
-        className={classes.addButton}
         onClick={handleOpen}
+        style={theme.custom.button}
       >
         Criar {entidadeNome}
       </Button>
@@ -40,7 +41,7 @@ const PopUp = ({
         <DialogContent>
           <DialogContentText>Para criar um(a) novo(a) {entidadeNome} preencha os campos abaixo e clique em Enviar</DialogContentText>
 
-          <FormControl className={classes.FormControl}>
+          <FormControl className="formControl">
             {labels.map((label, index) => {
               return (
                 <TextField
@@ -60,8 +61,8 @@ const PopUp = ({
               type="submit"
               variant="contained"
               color="primary"
-              className={classes.addButton}
               onClick={handleSubmit}
+              style={theme.custom.button}
             >
               Criar
             </Button>

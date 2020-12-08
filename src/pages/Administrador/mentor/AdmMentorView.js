@@ -34,8 +34,8 @@ const AdmMentorView = () => {
 
   return (
     <AdmSubView
-      getUrl={'/mentor?active='}
-      postUrl={'/mentor'}
+      urlGet={'/mentores?active='}
+      urlPost={'/mentores'}
       validator={validator}
       fields={fields}
     />

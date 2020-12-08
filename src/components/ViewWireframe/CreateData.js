@@ -5,7 +5,7 @@ import { handlePostRequest } from '../../services/httpService/httpService';
 
 const CreateData = (props) => {
 
-  const { dados, setDados, entidadeNome, classes, validator, postUrl } = props;
+  const { dados, setDados, entidadeNome, validator, postUrl } = props;
   const [labels, setLabels] = useState([]);
   const [open, setOpen] = useState(false);
   const [validInput, setValidInput] = useState({ valid: false, color: "secondary" });
@@ -58,7 +58,8 @@ const CreateData = (props) => {
 
     if (validInput.valid) {
       entidadeAux.id = dados[dados.length - 1].id + 1;
-      setDados([...dados, entidadeAux]);
+      console.log(dados);
+      //setDados([...dados, entidadeAux]);
 
       //handlePostRequest(postUrl, obj);
       _handleClickClose();
@@ -69,7 +70,6 @@ const CreateData = (props) => {
   return (
     <PopUp
       open={open}
-      classes={classes}
       handleOpen={_handleClickOpen}
       handleClose={_handleClickClose}
       handleInputValidation={_handleInputValidation}

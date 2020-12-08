@@ -1,20 +1,22 @@
 // import { TableBody } from '@material-ui/core';
-import React from 'react';
+import { Paper, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow } from '@material-ui/core';
+import { useEffect, useState } from 'react';
 import '../../estilo.js';
 import TableHeader from './TableHeader';
 
-const TableSearch = ({ dados, classes }) => {
+const TableSearch = (props) => {
 
-  if (dados.length === 0) {
-    return (null);
-  }
+  const {content, page, setPage, totalPages} = props;
+  const [rows, setRows] = useState([]);
+  const [rowsPerPage] = useState(10);
+  //const [page, setPage] = useState(0);
 
-  const _fillData = (dados) => {
+  const _fillData = (data) => {
     let arrFinal = [];
     let arr;
     let active;
 
-    dados.forEach(obj => {
+    data.forEach(obj => {
       arr = [];
       for (let prop in obj) {
         if (prop === "active" || prop === "Ativo") {
@@ -30,28 +32,49 @@ const TableSearch = ({ dados, classes }) => {
     return arrFinal;
   }
 
-  return (
-    <fieldset>
-      <legend>Resultado da consulta</legend>
-      <table className={classes.tabela}>
-        <tbody>
-          <TableHeader headers={dados[0]} classes={classes} />
-          {/* <TableBody dados={dados} /> */}
+  useEffect(() => {
+    setRows(_fillData(content));
+  }, [content]);
 
-          {_fillData(dados).map((alunosLinha, index) => {
-            return (
-              <tr key={index}>
-                {alunosLinha.map((dado, index) => {
-                  return (
-                    <td className={classes.tabelaElemento} key={index}>{dado}</td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </fieldset>
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  // const handleChangeRowsPerPage = (event) => {
+  //   setRowsPerPage(parseInt(event.target.value, 10));
+  //   setPage(0);
+  // };
+
+  return (
+    <>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHeader headers={content[0]} />
+          <TableBody>
+            {(rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows)
+              .map((row, index) => {
+                return (
+                  <TableRow key={index}>
+                    {row.map((dado, index) => {
+                      return (
+                        <TableCell key={index}>{(dado === null || dado.nome === undefined ? dado : dado.nome)}</TableCell>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        component="div"
+        count={totalPages * rowsPerPage}
+        rowsPerPageOptions={[]}
+        rowsPerPage={rowsPerPage}
+        page={page ? 0 : page}
+        onChangePage={handleChangePage}
+      />
+    </>
   );
 }
 export default TableSearch;

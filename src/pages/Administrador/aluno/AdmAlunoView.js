@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import AdmSubView from '../../../components/ViewWireframe/AdmSubView';
 
 
@@ -8,12 +8,10 @@ const AdmAlunoView = () => {
     pageHeader: "Alunos",
     buttonText: "aluno",
     textField: {
-      id: "alunoId",
       label: "Aluno ID",
       title: "Se nenhuma id for informada, a pesquisa retornará todos os alunos",
     },
     inputLabel: {
-      id: "select-alunos",
       label: "Alunos",
       title: "Se nehuma opção for escolhida, a pesquisa retornará ativos e inativos"
     },
@@ -41,12 +39,13 @@ const AdmAlunoView = () => {
     }
   });
 
+ 
   return (
     <AdmSubView
-      getUrl={"/aluno?active="}
-      postUrl={"/aluno"}
-      fields={fields}
+      urlGet={'/alunos?active='}
+      urlPost={'/alunos'}
       validator={validator}
+      fields={fields}
     />
   );
 }
