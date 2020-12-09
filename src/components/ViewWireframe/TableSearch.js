@@ -101,7 +101,7 @@ const TableSearch = (props) => {
       </TableContainer>
       <TablePagination
         component="div"
-        count={totalPages * rowsPerPage}
+        count={(totalPages ? totalPages * rowsPerPage : 1)}
         rowsPerPageOptions={[]}
         rowsPerPage={rowsPerPage}
         page={page ? 0 : page}
