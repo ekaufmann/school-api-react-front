@@ -8,7 +8,7 @@ export const handleGetRequest = (url, func) => {
   httpService.get((url))
     .then((response) => {
       const data = response.data;
-      func(data);
+      'content' in data ? func(data) : func({ content: [data] });
     }).catch((error) => {
       console.error(error);
     })

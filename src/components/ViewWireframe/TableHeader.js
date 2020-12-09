@@ -6,14 +6,13 @@ const TableHeader = ({ headers }) => {
   const _fillHeaders = (headers) => {
     let arr = [];
     let aux;
-    for (let prop in headers) {
+    for (let prop of headers) {
       aux = prop.charAt(0).toUpperCase() + prop.slice(1);
       if(aux === "Active") {
         aux = "Ativo";
       }
       arr = [...arr, aux];
     }
-    arr.push('Ações')
     return arr;
   }
 

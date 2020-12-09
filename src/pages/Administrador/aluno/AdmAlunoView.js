@@ -42,8 +42,7 @@ const AdmAlunoView = () => {
  
   return (
     <AdmSubView
-      urlGet={'/alunos?active='}
-      urlPost={'/alunos'}
+      urlBase={'/alunos'}
       validator={validator}
       fields={fields}
     />

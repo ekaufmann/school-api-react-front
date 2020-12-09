@@ -3,37 +3,63 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TablePagination, Ta
 import { useEffect, useState } from 'react';
 import '../../estilo.js';
 import TableHeader from './TableHeader';
+import TableCellCollapsed from './TableCellCollapsed';
 
 const TableSearch = (props) => {
 
-  const {content, page, setPage, totalPages} = props;
+  const { content, page, setPage, totalPages } = props;
   const [rows, setRows] = useState([]);
   const [rowsPerPage] = useState(10);
   //const [page, setPage] = useState(0);
 
+  const [headers, setHeaders] = useState([]);
+  const [objects, setObjects] = useState([]);
+
   const _fillData = (data) => {
+    const arrObjData = [];
     let arrFinal = [];
-    let arr;
+    let arr = [];
     let active;
+    let titulos = [];
+    let titulosFim = [];
 
     data.forEach(obj => {
+      let aux = [];
       arr = [];
+
       for (let prop in obj) {
-        if (prop === "active" || prop === "Ativo") {
+        if (Array.isArray(obj[prop]) || obj[prop] instanceof Object) {
+          aux.push(obj[prop]);
+          titulosFim.push(prop);
+          continue;
+        }
+        if (prop === "active") {
           active = (obj[prop] === true ? "Ativo" : "Inativo");
         } else {
           active = obj[prop];
         }
+        titulos.push(prop);
         arr = [...arr, active];
       }
-      arr.push("Botões")
+
+      arrObjData.push(aux);
+      arr.push("Botões");
+      titulos.push("Ações");
       arrFinal = [...arrFinal, arr];
+
+      titulos = titulos.concat(titulosFim);
+      titulos = titulos.filter((item, index) => titulos.indexOf(item) === index);
+
     });
-    return arrFinal;
+
+    return { arrFinal, arrObjData, titulos };
   }
 
   useEffect(() => {
-    setRows(_fillData(content));
+    const { arrFinal, arrObjData, titulos } = _fillData(content)
+    setRows(arrFinal);
+    setObjects(arrObjData);
+    setHeaders(titulos);
   }, [content]);
 
   const handleChangePage = (event, newPage) => {
@@ -49,18 +75,25 @@ const TableSearch = (props) => {
     <>
       <TableContainer component={Paper}>
         <Table>
-          <TableHeader headers={content[0]} />
+          <TableHeader headers={headers} />
           <TableBody>
             {(rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows)
               .map((row, index) => {
                 return (
-                  <TableRow key={index}>
-                    {row.map((dado, index) => {
-                      return (
-                        <TableCell key={index}>{(dado === null || dado.nome === undefined ? dado : dado.nome)}</TableCell>
-                      );
-                    })}
-                  </TableRow>
+                  <>
+                    <TableRow key={index}>
+                      {row.map((cell, index) => {
+                        return (
+                          <TableCell key={index}>{/*(cell === null ? cell : cell.nome)*/cell}</TableCell>
+                        );
+                      })}
+                      {objects[index].map((obj, index) => {
+                        return (
+                          <TableCellCollapsed key={index} cell={obj} />
+                        );
+                      })}
+                    </TableRow>
+                  </>
                 );
               })}
           </TableBody>

@@ -5,7 +5,7 @@ import TableSearch from './TableSearch';
 import SearchHeader from './SearchHeader';
 
 
-const AdmSubView = ({ urlGet, urlPost, validator, fields }) => {
+const AdmSubView = ({ urlBase, validator, fields }) => {
 
   const [actualPage, setActualPage] = useState(0);
   const [idPesquisada, setIdPesquisada] = useState(0);
@@ -13,17 +13,16 @@ const AdmSubView = ({ urlGet, urlPost, validator, fields }) => {
 
 
   const [dadosRecebidos, setDadosRecebidos] = useState({ content: [] });
-  const [dadosConsultados, setDadosConsultados] = useState([]);
 
-  // useEffect(() => {
-  //   handleGetRequest(urlGet, setDadosRecebidos);
-  // }, [urlGet]);
-
-  // componentDidUpdate - GET
+  // componentDidUpdate - GET All students by active
   useEffect(() => {
-    const url = urlGet + activeSelecionado + '&page=' + actualPage;
+    let url = urlBase + '?active=' + activeSelecionado + '&page=' + actualPage;
+    
+    if (idPesquisada > 0 && idPesquisada !== '') {
+      url = urlBase + '/' + idPesquisada
+    }
     handleGetRequest(url, setDadosRecebidos);
-  }, [urlGet, activeSelecionado, actualPage]);
+  }, [urlBase, activeSelecionado, actualPage, idPesquisada]);
 
   return (
     <Fragment>
@@ -38,7 +37,7 @@ const AdmSubView = ({ urlGet, urlPost, validator, fields }) => {
           setIdPesquisada={setIdPesquisada}
           activeSelecionado={activeSelecionado}
           setActiveSelecionado={setActiveSelecionado}
-          postUrl={urlPost}
+          urlPost={urlBase}
           validator={validator}
         />
 
