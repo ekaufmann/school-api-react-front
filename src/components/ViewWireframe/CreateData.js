@@ -11,6 +11,7 @@ const CreateData = (props) => {
   const [validInput, setValidInput] = useState({ valid: false, color: "secondary" });
 
   const _handleLabels = () => {
+    console.log(dados);
     const props = [];
     for (let prop in dados[0]) {
       if (prop !== "active" && prop !== "programa" && prop !== "id") {
