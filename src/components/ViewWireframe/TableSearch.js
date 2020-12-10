@@ -63,13 +63,9 @@ const TableSearch = (props) => {
   }, [content]);
 
   const handleChangePage = (event, newPage) => {
+    console.log(newPage);
     setPage(newPage);
   };
-
-  // const handleChangeRowsPerPage = (event) => {
-  //   setRowsPerPage(parseInt(event.target.value, 10));
-  //   setPage(0);
-  // };
 
   return (
     <>
@@ -81,20 +77,17 @@ const TableSearch = (props) => {
               .map((row, index) => {
                 let ind = index * (row.length + objects[index].length);
                 ind = (index > 0 ? ind+=1 : ind+=0);
-                console.log(ind);
                 return (
                   <>
                     <TableRow key={ind}>
                       {row.map((cell) => {
                         ind++;
-                        console.log(ind)
                         return (
                           <TableCell key={ind}>{/*(cell === null ? cell : cell.nome)*/cell}</TableCell>
                         );
                       })}
                       {objects[index].map((obj) => {
                         ind++;
-                        console.log(ind)
                         return (
                           <TableCellCollapsed key={ind} cell={obj} />
                         );
@@ -111,7 +104,7 @@ const TableSearch = (props) => {
         count={(totalPages ? totalPages * rowsPerPage : 1)}
         rowsPerPageOptions={[]}
         rowsPerPage={rowsPerPage}
-        page={page ? 0 : page}
+        page={page.isNaN ? 0 : page}
         onChangePage={handleChangePage}
       />
     </>

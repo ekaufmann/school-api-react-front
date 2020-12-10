@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AvaliacoesContext } from "../../../components/contexts/Contexts";
+import EntityContext from "../../../components/contexts/Contexts";
 import AdmSubView from "../../../components/ViewWireframe/AdmSubView";
 
 
@@ -44,9 +44,9 @@ const AdmAvaliacaoView = () => {
 
  
   return (
-    <AvaliacoesContext.Provider value={{urlBase:urlBase, validator:validator, fields:fields}}>
-      <AdmSubView context={AvaliacoesContext} />
-    </AvaliacoesContext.Provider>
+    <EntityContext.Provider value={{urlBase:urlBase, validator:validator, fields:fields}}>
+      <AdmSubView />
+    </EntityContext.Provider>
   );
 };
 

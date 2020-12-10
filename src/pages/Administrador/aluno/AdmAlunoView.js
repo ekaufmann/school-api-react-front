@@ -1,5 +1,5 @@
 import {  useState } from 'react';
-import { AlunosContext } from '../../../components/contexts/Contexts';
+import EntityContext from '../../../components/contexts/Contexts';
 import AdmSubView from '../../../components/ViewWireframe/AdmSubView';
 
 
@@ -44,9 +44,9 @@ const AdmAlunoView = () => {
 
 
   return (
-    <AlunosContext.Provider value={{urlBase:urlBase, validator:validator, fields:fields}}>
-      <AdmSubView context={AlunosContext}/>
-    </AlunosContext.Provider>
+    <EntityContext.Provider value={{urlBase:urlBase, validator:validator, fields:fields}}>
+      <AdmSubView />
+    </EntityContext.Provider>
   );
 }
 

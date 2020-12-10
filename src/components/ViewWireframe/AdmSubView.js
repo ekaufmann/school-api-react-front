@@ -3,16 +3,16 @@ import PageHeader from '../PageHeader';
 import { handleGetRequest } from '../../services/httpService/httpService';
 import TableSearch from './TableSearch';
 import SearchHeader from './SearchHeader';
+import EntityContext from '../contexts/Contexts';
 
-
-const AdmSubView = ({context}) => {
+const AdmSubView = () => {
 
   const [actualPage, setActualPage] = useState(0);
   const [idPesquisada, setIdPesquisada] = useState(0);
   const [activeSelecionado, setActiveSelecionado] = useState('');
   const [dadosRecebidos, setDadosRecebidos] = useState({ content: [] });
 
-  const { urlBase, validator, fields } = useContext(context);
+  const { urlBase, fields } = useContext(EntityContext);
 
   // componentDidUpdate - GET All students by active
   useEffect(() => {
@@ -22,6 +22,7 @@ const AdmSubView = ({context}) => {
       url = urlBase + '/' + idPesquisada
     }
     handleGetRequest(url, setDadosRecebidos);
+    console.log(dadosRecebidos);
   }, [urlBase, activeSelecionado, actualPage, idPesquisada]);
 
   return (
@@ -31,14 +32,11 @@ const AdmSubView = ({context}) => {
       <form name="gerencia-dados">
 
         <SearchHeader
-          fields={fields}
           dadosRecebidos={dadosRecebidos}
           idPesquisada={idPesquisada}
           setIdPesquisada={setIdPesquisada}
           activeSelecionado={activeSelecionado}
           setActiveSelecionado={setActiveSelecionado}
-          urlPost={urlBase}
-          validator={validator}
         />
 
         <br />

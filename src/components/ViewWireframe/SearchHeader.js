@@ -1,18 +1,18 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import CreateData from "./CreateData";
 
 import { Paper, useTheme, Box, TextField, MenuItem, FormControl, Select, InputLabel, Typography } from "@material-ui/core";
+import EntityContext from "../contexts/Contexts";
 
 
 const SearchHeader = (
-  { fields,
-    dadosRecebidos,
+  { dadosRecebidos,
     setDadosRecebidos,
     setIdPesquisada,
-    setActiveSelecionado,
-    postUrl,
-    validator
+    setActiveSelecionado
   }) => {
+
+  const { fields } = useContext(EntityContext);
 
   const [allData] = useState('');
   const theme = useTheme();
@@ -86,10 +86,7 @@ const SearchHeader = (
         <Box justifyContent="flex-end" >
           <CreateData
             dados={dadosRecebidos.content}
-            setDados={setDadosRecebidos}
             entidadeNome={fields.buttonText}
-            validator={validator}
-            postUrl={postUrl}
           />
         </Box>
       </Box>

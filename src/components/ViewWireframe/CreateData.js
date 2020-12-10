@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PopUp from '../PopUp/PopUp';
 import { handlePostRequest } from '../../services/httpService/httpService';
+import EntityContext from '../contexts/Contexts';
 
 
 const CreateData = (props) => {
 
-  const { dados, setDados, entidadeNome, validator, postUrl } = props;
+  const { urlBase, validator } = useContext(EntityContext)
+  const { dados, entidadeNome } = props;
   const [labels, setLabels] = useState([]);
   const [open, setOpen] = useState(false);
   const [validInput, setValidInput] = useState({ valid: false, color: "secondary" });
 
   const _handleLabels = () => {
-    console.log(dados);
     const props = [];
     for (let prop in dados[0]) {
       if (prop !== "active" && prop !== "programa" && prop !== "id") {
@@ -59,10 +60,10 @@ const CreateData = (props) => {
 
     if (validInput.valid) {
       entidadeAux.id = dados[dados.length - 1].id + 1;
-      console.log(dados);
-      //setDados([...dados, entidadeAux]);
+      const postUrl = urlBase;
 
-      //handlePostRequest(postUrl, obj);
+      console.log(entidadeAux);
+      handlePostRequest(postUrl, entidadeAux);
       _handleClickClose();
     }
 

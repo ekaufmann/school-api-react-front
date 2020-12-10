@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MentoriasContext } from '../../../components/contexts/Contexts';
+import EntityContext from '../../../components/contexts/Contexts';
 import AdmSubView from '../../../components/ViewWireframe/AdmSubView';
 
 const AdmMentoriaView = () => {
@@ -53,11 +53,9 @@ const AdmMentoriaView = () => {
   });
 
   return (
-    <MentoriasContext.Provider value={{urlBase:urlBase, validator:validator, fields:fields}}>
-      <AdmSubView
-        context={MentoriasContext}
-      />
-    </MentoriasContext.Provider>
+    <EntityContext.Provider value={{ urlBase: urlBase, validator: validator, fields: fields }}>
+      <AdmSubView />
+    </EntityContext.Provider>
   );
 };
 
