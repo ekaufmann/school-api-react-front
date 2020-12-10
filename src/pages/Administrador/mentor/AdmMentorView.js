@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { MentoresContext } from '../../../components/contexts/Contexts';
 import AdmSubView from '../../../components/ViewWireframe/AdmSubView';
 
 const AdmMentorView = () => {
+
+  const [urlBase] = useState('/mentores');
 
   const [fields] = useState({
     pageHeader: "Mentores",
@@ -19,25 +22,25 @@ const AdmMentorView = () => {
   });
 
   const [validator] = useState({
-      mentor: {
-        id: 0,
-        nome: "",
-        active: true,
+    mentor: {
+      id: 0,
+      nome: "",
+      active: true,
+    },
+    nome: {
+      helperText: "Nome precisa ter entre 5 e 96 caracteres",
+      validator: (value) => {
+        return (value.length < 5 || value.length > 96);
       },
-      nome: {
-        helperText: "Nome precisa ter entre 5 e 96 caracteres",
-        validator: (value) => {
-          return (value.length < 5 || value.length > 96);
-        },
-      }
-    });
+    }
+  });
 
   return (
-    <AdmSubView
-      urlBase={'/mentores'}
-      validator={validator}
-      fields={fields}
-    />
+    <MentoresContext.Provider value={{urlBase:urlBase, validator:validator, fields:fields}}>
+      <AdmSubView
+        context={MentoresContext}
+      />
+    </MentoresContext.Provider>
   );
 };
 

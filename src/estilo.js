@@ -1,8 +1,10 @@
-const { createMuiTheme, useTheme } = require("@material-ui/core");
+const { createMuiTheme } = require("@material-ui/core");
 
 
 const theme = createMuiTheme({
-  ...useTheme,
+  palette: {
+    type: 'dark',
+  },
   custom: {
     formControl: {
       margin: '8px',

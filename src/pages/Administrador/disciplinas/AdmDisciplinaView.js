@@ -1,11 +1,11 @@
-import {  useState } from 'react';
-import { AlunosContext } from '../../../components/contexts/Contexts';
-import AdmSubView from '../../../components/ViewWireframe/AdmSubView';
+import { useState } from "react";
+import { DisciplinasContext } from "../../../components/contexts/Contexts";
+import AdmSubView from "../../../components/ViewWireframe/AdmSubView";
 
 
-const AdmAlunoView = () => {
-  
-  const [urlBase] = useState('/alunos');
+const AdmDisciplinaView = () => {
+
+  const [urlBase] = useState('/disciplinas');
 
   const [fields] = useState({
     pageHeader: "Alunos",
@@ -42,12 +42,12 @@ const AdmAlunoView = () => {
     }
   });
 
-
+ 
   return (
-    <AlunosContext.Provider value={{urlBase:urlBase, validator:validator, fields:fields}}>
-      <AdmSubView context={AlunosContext}/>
-    </AlunosContext.Provider>
+    <DisciplinasContext.Provider value={{urlBase:urlBase, validator:validator, fields:fields}}>
+      <AdmSubView context={DisciplinasContext}/>
+    </DisciplinasContext.Provider>
   );
-}
+};
 
-export default AdmAlunoView;
+export default AdmDisciplinaView;

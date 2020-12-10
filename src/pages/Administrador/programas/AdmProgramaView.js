@@ -1,11 +1,11 @@
-import {  useState } from 'react';
-import { AlunosContext } from '../../../components/contexts/Contexts';
-import AdmSubView from '../../../components/ViewWireframe/AdmSubView';
+import { useState } from "react";
+import { ProgramasContext } from "../../../components/contexts/Contexts";
+import AdmSubView from "../../../components/ViewWireframe/AdmSubView";
 
 
-const AdmAlunoView = () => {
-  
-  const [urlBase] = useState('/alunos');
+const AdmProgramaView = () => {
+
+  const [urlBase] = useState('/programas')
 
   const [fields] = useState({
     pageHeader: "Alunos",
@@ -34,7 +34,7 @@ const AdmAlunoView = () => {
         return (value.length < 5 || value.length > 96);
       }
     },
-    classe: {
+    disciplina: {
       helperText: "Classe precisa ter entre 1 e 64 caracteres",
       validator: (value) => {
         return (value.length < 1 || value.length > 64);
@@ -42,12 +42,11 @@ const AdmAlunoView = () => {
     }
   });
 
-
   return (
-    <AlunosContext.Provider value={{urlBase:urlBase, validator:validator, fields:fields}}>
-      <AdmSubView context={AlunosContext}/>
-    </AlunosContext.Provider>
+    <ProgramasContext.Provider value={{urlBase:urlBase, validator:validator, fields:fields}}>
+      <AdmSubView context={ProgramasContext} />
+    </ProgramasContext.Provider>
   );
 }
 
-export default AdmAlunoView;
+export default AdmProgramaView;

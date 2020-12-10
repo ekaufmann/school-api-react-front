@@ -4,13 +4,14 @@ import { BrowserRouter } from 'react-router-dom';
 
 import './index.css';
 import App from './App';
-import { ThemeProvider } from '@material-ui/core';
+import { CssBaseline, ThemeProvider } from '@material-ui/core';
 import theme from './estilo';
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <BrowserRouter>
       <React.StrictMode>
+        <CssBaseline />
         <App />
       </React.StrictMode>
     </BrowserRouter>

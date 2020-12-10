@@ -1,18 +1,18 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import PageHeader from '../PageHeader';
 import { handleGetRequest } from '../../services/httpService/httpService';
 import TableSearch from './TableSearch';
 import SearchHeader from './SearchHeader';
 
 
-const AdmSubView = ({ urlBase, validator, fields }) => {
+const AdmSubView = ({context}) => {
 
   const [actualPage, setActualPage] = useState(0);
   const [idPesquisada, setIdPesquisada] = useState(0);
   const [activeSelecionado, setActiveSelecionado] = useState('');
-
-
   const [dadosRecebidos, setDadosRecebidos] = useState({ content: [] });
+
+  const { urlBase, validator, fields } = useContext(context);
 
   // componentDidUpdate - GET All students by active
   useEffect(() => {

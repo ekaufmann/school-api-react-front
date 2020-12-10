@@ -79,17 +79,24 @@ const TableSearch = (props) => {
           <TableBody>
             {(rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows)
               .map((row, index) => {
+                let ind = index * (row.length + objects[index].length);
+                ind = (index > 0 ? ind+=1 : ind+=0);
+                console.log(ind);
                 return (
                   <>
-                    <TableRow key={index}>
-                      {row.map((cell, index) => {
+                    <TableRow key={ind}>
+                      {row.map((cell) => {
+                        ind++;
+                        console.log(ind)
                         return (
-                          <TableCell key={index}>{/*(cell === null ? cell : cell.nome)*/cell}</TableCell>
+                          <TableCell key={ind}>{/*(cell === null ? cell : cell.nome)*/cell}</TableCell>
                         );
                       })}
-                      {objects[index].map((obj, index) => {
+                      {objects[index].map((obj) => {
+                        ind++;
+                        console.log(ind)
                         return (
-                          <TableCellCollapsed key={index} cell={obj} />
+                          <TableCellCollapsed key={ind} cell={obj} />
                         );
                       })}
                     </TableRow>
