@@ -7,13 +7,11 @@ import EntityContext from "../contexts/Contexts";
 
 const SearchHeader = (
   { dadosRecebidos,
-    setDadosRecebidos,
     setIdPesquisada,
     setActiveSelecionado
   }) => {
 
   const { fields } = useContext(EntityContext);
-
   const [allData] = useState('');
   const theme = useTheme();
   const [disableSelect, setDisableSelect] = useState(false);

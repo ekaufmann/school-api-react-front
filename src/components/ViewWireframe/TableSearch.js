@@ -7,10 +7,9 @@ import TableCellCollapsed from './TableCellCollapsed';
 
 const TableSearch = (props) => {
 
-  const { content, page, setPage, totalPages } = props;
-  const [rows, setRows] = useState([]);
+  const { dados, page, setPage } = props;
   const [rowsPerPage] = useState(10);
-  //const [page, setPage] = useState(0);
+  const [rows, setRows] = useState([]);
 
   const [headers, setHeaders] = useState([]);
   const [objects, setObjects] = useState([]);
@@ -51,19 +50,17 @@ const TableSearch = (props) => {
       titulos = titulos.filter((item, index) => titulos.indexOf(item) === index);
 
     });
-
     return { arrFinal, arrObjData, titulos };
   }
 
   useEffect(() => {
-    const { arrFinal, arrObjData, titulos } = _fillData(content)
+    const { arrFinal, arrObjData, titulos } = _fillData(dados.content);
     setRows(arrFinal);
     setObjects(arrObjData);
     setHeaders(titulos);
-  }, [content]);
+  }, [dados.content]);
 
   const handleChangePage = (event, newPage) => {
-    console.log(newPage);
     setPage(newPage);
   };
 
@@ -73,10 +70,10 @@ const TableSearch = (props) => {
         <Table>
           <TableHeader headers={headers} />
           <TableBody>
-            {(rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows)
-              .map((row, index) => {
+            {//(rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows)
+              rows.map((row, index) => {
                 let ind = index * (row.length + objects[index].length);
-                ind = (index > 0 ? ind+=1 : ind+=0);
+                ind = (index > 0 ? ind += 1 : ind += 0);
                 return (
                   <>
                     <TableRow key={ind}>
@@ -101,7 +98,7 @@ const TableSearch = (props) => {
       </TableContainer>
       <TablePagination
         component="div"
-        count={(totalPages ? totalPages * rowsPerPage : 1)}
+        count={dados.totalElements ? dados.totalElements : 1}
         rowsPerPageOptions={[]}
         rowsPerPage={rowsPerPage}
         page={page.isNaN ? 0 : page}

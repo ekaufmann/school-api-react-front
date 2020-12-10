@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useLayoutEffect, useState } from 'react';
 import PageHeader from '../PageHeader';
 import { handleGetRequest } from '../../services/httpService/httpService';
 import TableSearch from './TableSearch';
@@ -7,7 +7,7 @@ import EntityContext from '../contexts/Contexts';
 
 const AdmSubView = () => {
 
-  const [actualPage, setActualPage] = useState(0);
+  const [page, setPage] = useState(0);
   const [idPesquisada, setIdPesquisada] = useState(0);
   const [activeSelecionado, setActiveSelecionado] = useState('');
   const [dadosRecebidos, setDadosRecebidos] = useState({ content: [] });
@@ -15,15 +15,14 @@ const AdmSubView = () => {
   const { urlBase, fields } = useContext(EntityContext);
 
   // componentDidUpdate - GET All students by active
-  useEffect(() => {
-    let url = urlBase + '?active=' + activeSelecionado + '&page=' + actualPage;
-    
+  useLayoutEffect(() => {
+    let url = urlBase + '?active=' + activeSelecionado + '&page=' + page;
+
     if (idPesquisada > 0 && idPesquisada !== '') {
       url = urlBase + '/' + idPesquisada
     }
     handleGetRequest(url, setDadosRecebidos);
-    console.log(dadosRecebidos);
-  }, [urlBase, activeSelecionado, actualPage, idPesquisada]);
+  }, [urlBase, activeSelecionado, page, idPesquisada]);
 
   return (
     <Fragment>
@@ -42,11 +41,11 @@ const AdmSubView = () => {
         <br />
         {dadosRecebidos.content.length === 0 ? null :
           <TableSearch
-            content={dadosRecebidos.content}
-            page={actualPage}
-            setPage={setActualPage}
-            totalPages={dadosRecebidos.totalPages}
-          />}
+            dados={dadosRecebidos}
+            page={page}
+            setPage={setPage}
+          />
+        }
       </form>
     </Fragment>
   );
