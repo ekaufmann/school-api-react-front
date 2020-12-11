@@ -1,6 +1,6 @@
 // import { TableBody } from '@material-ui/core';
 import { Paper, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow } from '@material-ui/core';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import '../../estilo.js';
 import TableHeader from './TableHeader';
 import TableCellCollapsed from './TableCellCollapsed';
@@ -53,7 +53,7 @@ const TableSearch = (props) => {
     return { arrFinal, arrObjData, titulos };
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const { arrFinal, arrObjData, titulos } = _fillData(dados.content);
     setRows(arrFinal);
     setObjects(arrObjData);

@@ -43,16 +43,23 @@ const PopUp = ({
 
           <FormControl className="formControl">
             {labels.map((label, index) => {
+              if (!validator.hasOwnProperty(label)) {
+                return null;
+              }
+              const type = validator[label].type;
+
               return (
                 <TextField
                   id={entidadeNome + label}
-                  label={label}
+                  label={type === "date" ? validator[label].label : label}
                   key={index}
                   color={validInput.color}
                   helperText={validator[label].helperText}
+                  type={type}
                   variant="outlined"
                   margin="normal"
                   onChange={handleInputValidation}
+                  InputLabelProps={type === "date" ? { shrink: true, } : null}
                   fullWidth
                 />
               );

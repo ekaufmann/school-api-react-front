@@ -8,25 +8,25 @@ const AdmProgramaView = () => {
   const [urlBase] = useState('/programas')
 
   const [fields] = useState({
-    pageHeader: "Alunos",
-    buttonText: "aluno",
+    pageHeader: "Programas",
+    buttonText: "programa",
     textField: {
-      label: "Aluno ID",
-      title: "Se nenhuma id for informada, a pesquisa retornará todos os alunos",
+      label: "Programa ID",
+      title: "Se nenhuma id for informada, a pesquisa retornará todos os programass",
     },
     inputLabel: {
-      label: "Alunos",
+      label: "Programas",
       title: "Se nehuma opção for escolhida, a pesquisa retornará ativos e inativos"
     },
   });
 
   const [validator] = useState({
-    aluno: {
+    programa: {
       id: 0,
       nome: "",
-      classe: "",
+      dataInicio: "",
+      dataFim: "",
       active: true,
-      programa: null,
     },
     nome: {
       helperText: "Nome precisa ter entre 5 e 96 caracteres",
@@ -34,8 +34,18 @@ const AdmProgramaView = () => {
         return (value.length < 5 || value.length > 96);
       }
     },
-    disciplina: {
-      helperText: "Classe precisa ter entre 1 e 64 caracteres",
+    dataInicio: {
+      label: "Data Início",
+      type: "date",
+      helperText: "Precisa ser uma data válida",
+      validator: (value) => {
+        return (value.length < 1 || value.length > 64);
+      }
+    },
+    dataFim: {
+      label: "Data fim",
+      type: "date",
+      helperText: "Precisa ser uma data válida",
       validator: (value) => {
         return (value.length < 1 || value.length > 64);
       }

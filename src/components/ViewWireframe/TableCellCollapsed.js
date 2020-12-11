@@ -26,7 +26,6 @@ const TableCellColapsed = ({ cell }) => {
 
   const _handleOnClick = (event) => {
     setOpen(!open);
-    console.log(cell);
   }
 
   return (
