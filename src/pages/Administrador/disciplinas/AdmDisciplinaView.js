@@ -8,25 +8,24 @@ const AdmDisciplinaView = () => {
   const [urlBase] = useState('/disciplinas');
 
   const [fields] = useState({
-    pageHeader: "Alunos",
-    buttonText: "aluno",
+    pageHeader: "Disciplinas",
+    buttonText: "disciplina",
     textField: {
-      label: "Aluno ID",
-      title: "Se nenhuma id for informada, a pesquisa retornará todos os alunos",
+      label: "Disciplina ID",
+      title: "Se nenhuma id for informada, a pesquisa retornará todas as disciplinas",
     },
     inputLabel: {
-      label: "Alunos",
+      label: "Disciplinas",
       title: "Se nehuma opção for escolhida, a pesquisa retornará ativos e inativos"
     },
   });
 
   const [validator] = useState({
-    aluno: {
+    disciplina: {
       id: 0,
       nome: "",
-      classe: "",
       active: true,
-      programa: null,
+      media: 0,
     },
     nome: {
       helperText: "Nome precisa ter entre 5 e 96 caracteres",
@@ -34,10 +33,10 @@ const AdmDisciplinaView = () => {
         return (value.length < 5 || value.length > 96);
       }
     },
-    classe: {
-      helperText: "Classe precisa ter entre 1 e 64 caracteres",
+    media: {
+      helperText: "Media precisa ser maior ou igual a 5 e menor ou igual a  7",
       validator: (value) => {
-        return (value.length < 1 || value.length > 64);
+        return (value < 5 || value > 7);
       }
     }
   });
