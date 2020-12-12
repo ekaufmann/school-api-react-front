@@ -20,6 +20,16 @@ const PopUp = ({
 
   const theme = useTheme();
 
+  const _capitalize = (label) => {
+    let string = '';
+    const words = label.split();
+
+    words.forEach(word => {
+      string += word.charAt(0).toUpperCase() + word.slice(1) + ' ';
+    })
+    return string.trim();
+  }
+
   return (
     <>
       <Button
@@ -51,7 +61,7 @@ const PopUp = ({
               return (
                 <TextField
                   id={entidadeNome + label}
-                  label={type === "date" ? validator[label].label : label}
+                  label={type === "date" ? validator[label].label : _capitalize(label)}
                   key={index}
                   color={validInput.color}
                   helperText={validator[label].helperText}

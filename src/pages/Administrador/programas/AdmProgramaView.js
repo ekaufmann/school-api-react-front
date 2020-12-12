@@ -39,7 +39,8 @@ const AdmProgramaView = () => {
       type: "date",
       helperText: "Precisa ser uma data válida",
       validator: (value) => {
-        return (value.length < 1 || value.length > 64);
+        console.log(value > Date.now())
+        return value > Date.now();
       }
     },
     dataFim: {
@@ -47,7 +48,7 @@ const AdmProgramaView = () => {
       type: "date",
       helperText: "Precisa ser uma data válida",
       validator: (value) => {
-        return (value.length < 1 || value.length > 64);
+        return value > Date.now();
       }
     }
   });

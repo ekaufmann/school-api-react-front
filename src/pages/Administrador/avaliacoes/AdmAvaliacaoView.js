@@ -8,36 +8,45 @@ const AdmAvaliacaoView = () => {
   const [urlBase] = useState('/avaliacoes');
 
   const [fields] = useState({
-    pageHeader: "Alunos",
-    buttonText: "aluno",
+    pageHeader: "Avaliações",
+    buttonText: "avaliação",
     textField: {
-      label: "Aluno ID",
-      title: "Se nenhuma id for informada, a pesquisa retornará todos os alunos",
+      label: "Avaliação ID",
+      title: "Se nenhuma id for informada, a pesquisa retornará todas as avaliações",
     },
     inputLabel: {
-      label: "Alunos",
+      label: "Avaliações",
       title: "Se nehuma opção for escolhida, a pesquisa retornará ativos e inativos"
     },
   });
 
   const [validator] = useState({
-    aluno: {
+    avaliacao: {
       id: 0,
-      nome: "",
-      classe: "",
-      active: true,
-      programa: null,
+      disciplinaId: 1,
+      conteudo: "",
+      dataRealizacao: "",
+      active: true
     },
-    nome: {
-      helperText: "Nome precisa ter entre 5 e 96 caracteres",
+    disciplina: {
+      label: "Disciplina",
+      helperText: "Disciplina Id precisa ser um número positivo",
+      validator: (value) => {
+        return (value > 0);
+      }
+    },
+    conteudo: {
+      helperText: "Conteúdo precisa ter entre 5 e 64 caracteres",
       validator: (value) => {
         return (value.length < 5 || value.length > 96);
       }
     },
-    classe: {
-      helperText: "Classe precisa ter entre 1 e 64 caracteres",
+    dataRealizacao: {
+      label: "Data de realização",
+      type: "date",
+      helperText: "A data de realização precisa ser válida",
       validator: (value) => {
-        return (value.length < 1 || value.length > 64);
+        return value > Date.now();
       }
     }
   });
